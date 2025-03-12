@@ -1,12 +1,24 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import { getCollection, type CollectionEntry } from "astro:content";
+const insumos = await getCollection("insumos");
+
+type Insumo = CollectionEntry<"insumos">;
+
 
 ---
 
 <MainLayout>
-    <head>
-        <link rel="stylesheet" href="/src/styles/global.css">
-    </head>
     <h1>Vista de insumos</h1>
-    
+
+    <div class="grid">
+        {insumos.map((insumo : Insumo) => (
+            <div class="card">
+                <img src={insumo.data.imagen} alt={insumo.data.nombre} />
+                <h2>{insumo.data.nombre}</h2>
+                <p>{insumo.data.estado}</p>
+                <p><strong>Estado:</strong> {insumo.data.estado}</p>
+            </div>
+        ))}
+    </div>
 </MainLayout>

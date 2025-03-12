@@ -1,23 +1,19 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
+import { getCollection } from 'astro:content';
+
+const usuarios = await getCollection("usuarios");
 
 ---
 
 <MainLayout>
-    <head>
-        <link rel="stylesheet" href="/src/styles/global.css">
-    </head>
     <h1>Aqui puedes ver los usuarios registrados y los roles</h1>
-    <table>
-        <tr>
-            <td>Usuario</td>
-            <td>Rol</td>
-            <td>Acciones</td>
-        </tr>
-        <tr>
-            <td>///</td>
-            <td>///</td>
-            <td>---</td>
-        </tr>
-    </table>
+    <div class="usuarios-lista">
+        {usuarios.map((usuario) => (
+            <div class="usuario">
+                <span>{usuario.data.nombre} - {usuario.data.rol}</span>
+                <a href={`/editar-usuario/${usuario.slug}`} class="editar-btn">Editar</a>
+            </div>
+        ))}
+    </div>
 </MainLayout>
